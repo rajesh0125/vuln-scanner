@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Vulnerability Assessment Tool</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <div class="logo">VulnScan<span>Pro</span></div>
+      <div class="header-right">
+        <span class="tag">Python + Nmap</span>
+      </div>
+    </header>
+
+    <main class="main">
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+      <span>⚠ For educational & authorized testing only.</span>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,365 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top left, #141e30, #243b55);
+  color: #f7fafc;
+}
+
+/* Layout */
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header,
+.footer {
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header {
+  background: rgba(15, 23, 42, 0.9);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.footer {
+  font-size: 0.8rem;
+  color: #cbd5f5;
+  justify-content: center;
+  background: transparent;
+}
+
+.main {
+  flex: 1;
+  padding: 1.5rem;
+}
+
+/* Header */
+.logo {
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: 0.05em;
+}
+
+.logo span {
+  color: #38bdf8;
+}
+
+.tag {
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  font-size: 0.75rem;
+}
+
+/* Grid */
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.3fr);
+  gap: 1.5rem;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Cards */
+.card {
+  background: rgba(15, 23, 42, 0.85);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 25px 40px rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+}
+
+.card-form {
+  backdrop-filter: blur(10px);
+}
+
+.card-results {
+  overflow: auto;
+  max-height: calc(100vh - 170px);
+}
+
+/* Text */
+.title {
+  font-size: 1.5rem;
+  margin-bottom: 0.3rem;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  color: #cbd5f5;
+  margin-bottom: 1.2rem;
+}
+
+.title-small {
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+}
+
+/* Alerts */
+.alert {
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.alert-error {
+  background: rgba(248, 113, 113, 0.15);
+  border: 1px solid rgba(248, 113, 113, 0.6);
+  color: #fecaca;
+}
+
+/* Form */
+.form {
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+label {
+  display: block;
+  font-size: 0.85rem;
+  margin-bottom: 0.3rem;
+  color: #e5e7eb;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 0.55rem 0.65rem;
+  border-radius: 0.6rem;
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  background: rgba(15, 23, 42, 0.95);
+  color: #e5e7eb;
+  font-size: 0.9rem;
+}
+
+input[type="text"]::placeholder {
+  color: #6b7280;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.4);
+}
+
+/* Radio */
+.radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+}
+
+.radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* Button */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.9rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, #0ea5e9, #22c55e);
+  color: #0b1120;
+  font-weight: 600;
+  box-shadow: 0 18px 30px rgba(56, 189, 248, 0.25);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 22px 40px rgba(56, 189, 248, 0.35);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 12px 24px rgba(56, 189, 248, 0.2);
+}
+
+/* Hint box */
+.hint {
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed rgba(148, 163, 184, 0.5);
+  font-size: 0.85rem;
+  color: #cbd5f5;
+}
+
+.hint h3 {
+  font-size: 0.9rem;
+  margin-bottom: 0.35rem;
+}
+
+.hint ul {
+  padding-left: 1.1rem;
+  margin: 0;
+}
+
+.hint li {
+  margin-bottom: 0.2rem;
+}
+
+/* Results panel */
+.placeholder {
+  font-size: 0.9rem;
+  color: #9ca3af;
+}
+
+.result-meta {
+  font-size: 0.85rem;
+  color: #cbd5f5;
+  margin-bottom: 0.75rem;
+}
+
+.reports ul {
+  padding-left: 1rem;
+  margin: 0.2rem 0 0;
+}
+
+.reports code {
+  font-size: 0.75rem;
+}
+
+/* Host card */
+.host-card {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 0.9rem;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.4);
+}
+
+.host-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.host-title {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.host-subtitle {
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+.host-state {
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  border: 1px solid;
+}
+
+.host-state-up {
+  border-color: #22c55e;
+  color: #bbf7d0;
+}
+
+.host-state-down {
+  border-color: #f97373;
+  color: #fecaca;
+}
+
+/* Protocol block */
+.proto-block {
+  margin-top: 0.5rem;
+}
+
+.proto-header {
+  font-size: 0.85rem;
+  margin-bottom: 0.3rem;
+  color: #e5e7eb;
+}
+
+.proto-header span {
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.5);
+}
+
+/* Table */
+.ports-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+  margin-top: 0.3rem;
+}
+
+.ports-table th,
+.ports-table td {
+  border: 1px solid rgba(51, 65, 85, 0.9);
+  padding: 0.35rem 0.4rem;
+  vertical-align: top;
+}
+
+.ports-table th {
+  background: rgba(15, 23, 42, 1);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.row-vuln {
+  background: rgba(248, 250, 252, 0.02);
+}
+
+.scripts-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.scripts-list li {
+  margin-bottom: 0.25rem;
+}
+
+.scripts-list pre {
+  margin: 0.15rem 0 0;
+  background: rgba(15, 23, 42, 0.95);
+  border-radius: 0.35rem;
+  padding: 0.3rem 0.35rem;
+  border: 1px solid rgba(30, 64, 175, 0.8);
+  max-height: 160px;
+  overflow: auto;
+}
+
+.no-vuln {
+  color: #9ca3af;
+  font-style: italic;
+}
+
+/* Code */
+code {
+  font-family: "JetBrains Mono", Menlo, Monaco, Consolas, "Courier New", monospace;
+}

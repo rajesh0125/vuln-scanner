@@ -1,0 +1,154 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="grid">
+  <!-- LEFT: FORM -->
+  <section class="card card-form">
+    <h1 class="title">Vulnerability Assessment Tool</h1>
+    <p class="subtitle">
+      Scan a host or network using Nmap, detect open ports & potential vulnerabilities,
+      and generate clean reports.
+    </p>
+
+    {% if error %}
+      <div class="alert alert-error">{{ error }}</div>
+    {% endif %}
+
+    <form method="POST" class="form">
+      <div class="form-group">
+        <label for="target">Target (IP / Domain / Range)</label>
+        <input
+          type="text"
+          id="target"
+          name="target"
+          placeholder="e.g. 192.168.1.1 or scanme.nmap.org or 192.168.1.0/24"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="ports">Ports (optional)</label>
+        <input
+          type="text"
+          id="ports"
+          name="ports"
+          placeholder="1-1024 or 80,443 (leave blank for default)"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Report Type</label>
+        <div class="radio-group">
+          <label><input type="radio" name="report_type" value="none" checked /> No file</label>
+          <label><input type="radio" name="report_type" value="text" /> Text</label>
+          <label><input type="radio" name="report_type" value="html" /> HTML</label>
+          <label><input type="radio" name="report_type" value="both" /> Both</label>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-primary">
+        🚀 Run Scan
+      </button>
+    </form>
+
+    <div class="hint">
+      <h3>Quick Tips</h3>
+      <ul>
+        <li>Only scan systems you own or have permission to test.</li>
+        <li>Scanning large ranges can take a long time.</li>
+        <li>Use smaller port ranges (e.g. <code>1-1024</code>) during demos.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- RIGHT: RESULT PANEL -->
+  <section class="card card-results">
+    <h2 class="title-small">Scan Results</h2>
+
+    {% if not scan_result %}
+      <p class="placeholder">
+        Run a scan to see results here. Open ports, services and vulnerabilities
+        will be visualized in this panel.
+      </p>
+    {% else %}
+      <div class="result-meta">
+        <div><strong>Target:</strong> {{ scan_result.target }}</div>
+        {% if report_paths %}
+          <div class="reports">
+            <strong>Generated Reports:</strong>
+            <ul>
+              {% for label, path in report_paths %}
+                <li>{{ label }} → <code>{{ path }}</code></li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+      </div>
+
+      {% for host in scan_result.data %}
+        <div class="host-card">
+          <div class="host-header">
+            <div>
+              <div class="host-title">{{ host.host }}</div>
+              <div class="host-subtitle">
+                Hostname: {{ host.hostname or "N/A" }}
+              </div>
+            </div>
+            <div class="host-state host-state-{{ host.state }}">
+              {{ host.state | upper }}
+            </div>
+          </div>
+
+          {% for proto in host.protocols %}
+            <div class="proto-block">
+              <div class="proto-header">
+                Protocol: <span>{{ proto.protocol }}</span>
+              </div>
+              <table class="ports-table">
+                <thead>
+                  <tr>
+                    <th>Port</th>
+                    <th>State</th>
+                    <th>Service</th>
+                    <th>Product</th>
+                    <th>Version</th>
+                    <th>Extra</th>
+                    <th>Vulnerabilities / Script Output</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for p in proto.ports %}
+                    {% set has_vuln = p.scripts and p.scripts|length > 0 %}
+                    <tr class="{% if has_vuln %}row-vuln{% endif %}">
+                      <td>{{ p.port }}/{{ proto.protocol }}</td>
+                      <td>{{ p.state }}</td>
+                      <td>{{ p.name }}</td>
+                      <td>{{ p.product }}</td>
+                      <td>{{ p.version }}</td>
+                      <td>{{ p.extrainfo }}</td>
+                      <td>
+                        {% if has_vuln %}
+                          <ul class="scripts-list">
+                            {% for script_name, output in p.scripts.items() %}
+                              <li>
+                                <strong>{{ script_name }}:</strong>
+                                <pre>{{ output }}</pre>
+                              </li>
+                            {% endfor %}
+                          </ul>
+                        {% else %}
+                          <span class="no-vuln">No script findings</span>
+                        {% endif %}
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+    {% endif %}
+  </section>
+</div>
+{% endblock %}
